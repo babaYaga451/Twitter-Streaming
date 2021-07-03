@@ -1,19 +1,45 @@
-from tweepy import OAuthHandler
 from tweepy import StreamListener, Stream
 from os import environ
 from dotenv import load_dotenv
+import config
 
 load_dotenv()
 
-consumer_key = environ.get('CONSUMER_KEY')
-consumer_secret = environ.get('CONSUMER_SECRET')
-access_token = environ.get('ACCESS_TOKEN')
-access_token_secret = environ.get('ACCESS_TOKEN_SECRET')
+PUBSUB_TOPIC = environ.get('PUBSUB_TOPIC')
+
+
+def publish(client, pubsub_topic, tw):
+    for tweet in tw:
+        data = str(tweet).encode("utf-8")
+        future = client.publish(pubsub_topic, data)
+        print(future.result())
 
 
 class StdOutListener(StreamListener):
+    """
+    A listener handles tweets that are received from the stream.
+    This listener dumps the tweets into a PubSub topic
+    """
+
+    count = 0
+    tweets = []
+    batch_size = 50
+    total_tweets = 100
+    client = config.get_publisher_client()
+
+    def write_to_pubsub(self, tw):
+        publish(self.client, PUBSUB_TOPIC, tw)
+
     def on_data(self, data):
-        print(data)
+        self.tweets.append(data)
+        if len(self.tweets) >= self.batch_size:
+            self.write_to_pubsub(self.tweets)
+            self.tweets = []
+        self.count += 1
+        # print(self.count)
+        if self.count > self.total_tweets:
+            print("End of tweets")
+            return False
 
     def on_error(self, status_code):
         print(status_code)
@@ -22,10 +48,9 @@ class StdOutListener(StreamListener):
 if __name__ == '__main__':
     listener = StdOutListener()
 
-    auth = OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(access_token, access_token_secret)
+    auth = config.get_auth()
 
     stream = Stream(auth, listener)
     stream.filter(track=[
-        'Euro Cup', 'Lionel Messi', 'Spain'
+        'Euro Cup', 'Loki', 'Tomorrow War'
     ])
