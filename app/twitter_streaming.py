@@ -1,3 +1,4 @@
+import json
 from tweepy import StreamListener, Stream
 from os import environ
 from dotenv import load_dotenv
@@ -8,11 +9,19 @@ load_dotenv()
 PUBSUB_TOPIC = environ.get('PUBSUB_TOPIC')
 
 
+def callback(future):
+    try:
+        message_id = future.result()
+        print(message_id)
+    except BaseException as e:
+        print(e)
+
+
 def publish(client, pubsub_topic, tw):
     for tweet in tw:
-        data = str(tweet).encode("utf-8")
+        data = json.dumps(tweet).encode("utf-8")
         future = client.publish(pubsub_topic, data)
-        print(future.result())
+        future.add_done_callback(callback)
 
 
 class StdOutListener(StreamListener):
@@ -24,7 +33,7 @@ class StdOutListener(StreamListener):
     count = 0
     tweets = []
     batch_size = 50
-    total_tweets = 100
+    total_tweets = 1000
     client = config.get_publisher_client()
 
     def write_to_pubsub(self, tw):
