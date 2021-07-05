@@ -9,3 +9,11 @@ README.rst
 commands
 
 .gitignore
+
+terraform.tfvars
+
+.terraform*
+
+*.zip
+
+*.tfstate*
