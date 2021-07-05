@@ -6,6 +6,6 @@ venv
 
 README.rst
 
-events
-
 commands
+
+.gitignore

@@ -33,7 +33,7 @@ class StdOutListener(StreamListener):
     count = 0
     tweets = []
     batch_size = 50
-    total_tweets = 1000
+    total_tweets = 250
     client = config.get_publisher_client()
 
     def write_to_pubsub(self, tw):
@@ -45,7 +45,6 @@ class StdOutListener(StreamListener):
             self.write_to_pubsub(self.tweets)
             self.tweets = []
         self.count += 1
-        # print(self.count)
         if self.count > self.total_tweets:
             print("End of tweets")
             return False
@@ -61,5 +60,5 @@ if __name__ == '__main__':
 
     stream = Stream(auth, listener)
     stream.filter(track=[
-        'Euro Cup', 'Loki', 'Tomorrow War'
+        'Avengers', 'Loki', 'Tomorrow War'
     ])
