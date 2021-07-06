@@ -9,6 +9,7 @@ python = "^3.8"
 tweepy = "^3.10.0"
 python-dotenv = "^0.18.0"
 google-cloud-pubsub = "^2.6.0"
+loguru = "^0.5.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

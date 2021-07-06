@@ -10,10 +10,8 @@ commands
 
 .gitignore
 
-terraform.tfvars
+terraform.*
 
 .terraform*
 
 *.zip
-
-*.tfstate*
