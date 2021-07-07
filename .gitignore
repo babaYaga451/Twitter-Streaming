@@ -15,3 +15,7 @@ terraform.*
 .terraform*
 
 *.zip
+
+events
+
+*.txt
