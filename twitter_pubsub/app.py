@@ -1,12 +1,9 @@
 import json
 from os import environ
-from dotenv import load_dotenv
 from tweepy import Stream
 from tweepy.streaming import StreamListener
-
 import config
 
-load_dotenv()
 
 PUBSUB_TOPIC = environ.get('PUBSUB_TOPIC')
 

@@ -11,6 +11,7 @@ def handle_request(event, context):
 
     if 'data' in event:
         message = base64.b64decode(event['data']).decode('utf-8')  # Decoding messages received from PubSub
+        logger.info("Message recieved from pubsub {}", message)
         tweet = message_helper.process_message(message, context.event_id)
         if tweet:
             try:

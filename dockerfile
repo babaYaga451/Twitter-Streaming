@@ -11,5 +11,5 @@ RUN pip install poetry==1.0.*
 RUN poetry config virtualenvs.create false
 RUN poetry install
 
-COPY .env twitter_pubsub/. ./
+COPY twitter_pubsub/. ./
 CMD ["poetry", "run", "python" , "app.py"]

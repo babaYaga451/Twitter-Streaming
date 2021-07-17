@@ -1,6 +1,6 @@
 import json
 from loguru import logger
-from tweet_util import flatten_tweets, select_text, clean_tweet_text, find_centroid
+from .tweet_util import flatten_tweets, select_text, clean_tweet_text, find_centroid
 
 
 def process_message(message, event_id):
@@ -10,6 +10,7 @@ def process_message(message, event_id):
     """
     logger.info("Processing messages.. event_id: {}", event_id)
     tweet_obj = json.loads(message)
+    logger.info(type(tweet_obj))
 
     if 'place' in tweet_obj:
         tweet = {}
