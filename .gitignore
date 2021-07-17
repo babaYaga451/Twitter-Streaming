@@ -1,12 +1,6 @@
 venv
 
-.env
-
 .idea
-
-README.rst
-
-commands
 
 .gitignore
 
@@ -15,7 +9,3 @@ terraform.*
 .terraform*
 
 *.zip
-
-events
-
-*.txt
