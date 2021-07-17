@@ -39,7 +39,7 @@ resource "google_cloudfunctions_function" "function" {
 
 }
 
-resource "google_container_cluster" "default" {
+resource "google_container_cluster" "primary" {
   name        = var.name
   project     = var.gcp_project
   description = "Twitter Cluster"
@@ -58,11 +58,11 @@ resource "google_container_cluster" "default" {
   }
 }
 
-resource "google_container_node_pool" "default" {
+resource "google_container_node_pool" "primary_preemptible_nodes" {
   name       = "${var.name}-node-pool"
   project    = var.gcp_project
   location   = var.location
-  cluster    = google_container_cluster.default.name
+  cluster    = google_container_cluster.primary.name
   node_count = 1
 
   node_config {
