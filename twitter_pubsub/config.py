@@ -4,10 +4,7 @@ All configuration required for this project
 
 from tweepy import OAuthHandler
 from os import environ
-from dotenv import load_dotenv
 from google.cloud import pubsub_v1
-
-load_dotenv()
 
 consumer_key = environ.get('CONSUMER_KEY')
 consumer_secret = environ.get('CONSUMER_SECRET')

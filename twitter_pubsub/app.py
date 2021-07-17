@@ -48,7 +48,10 @@ class StdOutListener(StreamListener):
 
 def start_stream():
     stream = Stream(auth, listener)
-    stream.filter(track=['Avengers', 'Loki', 'Tomorrow War'])
+    stream.filter(track=['FIFA', 'Euro cup 2021', 'Premier League'
+                         'Say no to racism', 'Laliga', 'Bundesliga',
+                         'Football Transfers', 'Lionel Messi', 'Christiano Ronaldo'
+                         'Euro cup 2021 champions', 'Raheem Sterling'])
 
 
 if __name__ == '__main__':

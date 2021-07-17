@@ -2,3 +2,8 @@ variable "gcp_project" {}
 variable "bucket_name" {}
 variable "lambda_name" {}
 variable "topic_name" {}
+variable "ES_HOST_URL" {}
+variable "name" {}
+variable "location" {}
+variable "initial_node_count" {}
+variable "machine_type" {}
