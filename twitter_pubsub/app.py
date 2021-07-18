@@ -1,25 +1,21 @@
+import base64
 import json
 from os import environ
 from tweepy import Stream
 from tweepy.streaming import StreamListener
+from loguru import logger
 import config
 
 
 PUBSUB_TOPIC = environ.get('PUBSUB_TOPIC')
 
 
-def callback(future):
-    try:
-        message_id = future.result()
-        print(message_id)
-    except BaseException as e:
-        print(e)
-
-
 def publish(client, pubsub_topic, tw):
-    data = json.dumps(tw).encode("utf-8")
-    future = client.publish(pubsub_topic, data)
-    future.add_done_callback(callback)
+    tweet_dict = json.loads(tw)
+    data = json.dumps(tweet_dict).encode("utf-8")
+    encode_data = base64.b64encode(data)
+    future = client.publish(pubsub_topic, encode_data)
+    logger.info("Message Id {}", future.result())
 
 
 class StdOutListener(StreamListener):

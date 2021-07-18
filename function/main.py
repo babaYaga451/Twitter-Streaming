@@ -10,12 +10,14 @@ def handle_request(event, context):
                 context.event_id, context.timestamp)
 
     if 'data' in event:
+        logger.info("Message recieved from pubsub {}", event['data'])
         message = base64.b64decode(event['data']).decode('utf-8')  # Decoding messages received from PubSub
-        logger.info("Message recieved from pubsub {}", message)
+        logger.info("Decoded message {}", message)
         tweet = message_helper.process_message(message, context.event_id)
         if tweet:
             try:
                 repository.save(tweet)
+                logger.info("Saving to DB...")
             except ElasticsearchException as e:
                 logger.error(str(e))
             except ImproperlyConfigured as e:
